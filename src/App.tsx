@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import './App.css'
 import ConfigTrigger from './components/ConfigTrigger';
+import Trigger from './components/Trigger';
 
 export default function App() {
 
@@ -18,18 +19,18 @@ export default function App() {
 
             const triggers = Object.keys(items).filter((key) => key.startsWith('trigger_')) .map((key) => ({ id: key, ...items[key] }));;
             console.log('All stored triggers:', triggers);
-            // Object.keys(items).forEach((key) => {
-            //   if (key.startsWith('trigger_')) {
-            //     console.log('Trigger key:', key, 'Value:', items[key]);
-            //   }
-            // });
+
             setTriggers(triggers);
+
         });
 
     }
 
-    function addNewTrigger() {
-        setIsNewTrigger(true);
+    function deleteTrigger(triggerId: string) {
+        chrome.storage.local.remove(triggerId, () => {
+            console.log('Trigger with key', triggerId, 'deleted'); 
+            retrieveTriggers();
+        });
     }
 
     return (
@@ -39,7 +40,7 @@ export default function App() {
             </section>
             <section>
                 <div>
-                    <button onClick={addNewTrigger}>Add Trigger</button>
+                    <button onClick={() => setIsNewTrigger(true)}>Add Trigger</button>
                 </div>
             </section>
             <section>
@@ -49,10 +50,12 @@ export default function App() {
                 <div style={{ display: isNewTrigger ? "none" : "block" }}>
                     {triggers.map((trigger) => (
                         <div key={trigger.id}>
-                            <h3>Trigger ID: {trigger.id}</h3>
-                            <h3>Trigger Name: {trigger.trigger_name}</h3>
-                            <p>Webhook URL: {trigger.webhook_url}</p>
-                            <p>Authentication Token: {trigger.auth_token}</p>
+                            <Trigger 
+                            trigger_id={trigger.id} 
+                            trigger_name={trigger.trigger_name} 
+                            webhook_url={trigger.webhook_url}
+                            auth_token={trigger.auth_required == "on" ? trigger.auth_token : ""}
+                            deleteTrigger={deleteTrigger}/>
                         </div>
                     ))}
                 </div>

@@ -39,6 +39,7 @@ export default function ConfigTrigger ({setIsNewTrigger}: ConfigTriggerProps) {
 
     setTriggerName('');
     setWebhookUrl('');
+    setUseAuth(false);
     setAuthToken('');
     setIsNewTrigger(false);
   };
@@ -68,7 +69,7 @@ export default function ConfigTrigger ({setIsNewTrigger}: ConfigTriggerProps) {
         />
       </div>
       <div>
-        <input type='checkbox' id='auth_required' name='auth_required' onChange={() => {setUseAuth(!useAuth)}}/>
+        <input type='checkbox' id='auth_required' name='auth_required' checked={useAuth} onChange={() => {setUseAuth(!useAuth)}}/>
         <label htmlFor='auth_required'>Use Authentication</label>
         <label htmlFor="auth_token">Authentication Token</label>
         <input
