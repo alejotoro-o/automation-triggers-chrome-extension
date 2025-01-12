@@ -1,3 +1,5 @@
+import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 
 interface ConfigTriggerProps { 
@@ -69,8 +71,16 @@ export default function ConfigTrigger ({setIsNewTrigger}: ConfigTriggerProps) {
         />
       </div>
       <div>
-        <input type='checkbox' id='auth_required' name='auth_required' checked={useAuth} onChange={() => {setUseAuth(!useAuth)}}/>
-        <label htmlFor='auth_required'>Use Authentication</label>
+        <input
+        className='inline w-auto mr-2' 
+        type='checkbox'
+        id='auth_required' 
+        name='auth_required' 
+        checked={useAuth} 
+        onChange={() => {setUseAuth(!useAuth)}}/>
+        <label className='inline w-auto' htmlFor='auth_required'>Use Authentication</label>
+      </div>
+      <div>
         <label htmlFor="auth_token">Authentication Token</label>
         <input
           type="text"
@@ -81,9 +91,9 @@ export default function ConfigTrigger ({setIsNewTrigger}: ConfigTriggerProps) {
           disabled={!useAuth}
           required
         />
-        <button type='button' onClick={generateBearerToken} disabled={!useAuth}>Generate Token</button>
+        <button className='mb-2 cursor-pointer text-blue-600 hover:underline transition-all duration-300' type='button' onClick={generateBearerToken} disabled={!useAuth}>Generate Token</button>
       </div>
-      <button type="submit">Save Trigger</button>
+      <button className='p-2 border-[1px] rounded-md border-gray-400 hover:bg-gray-200 transition-all duration-300' type="submit"><FontAwesomeIcon icon={faFloppyDisk} /> Save Trigger</button>
     </form>
   );
 };

@@ -1,3 +1,5 @@
+import { faCircleRight, faCircleStop, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 
 interface TriggerProps {
@@ -48,17 +50,28 @@ export default function Trigger ({trigger_id, trigger_name, webhook_url, auth_to
     }
 
     return (
-        <div>
-            <div>
-                <h3>Trigger Name: {trigger_name}</h3>
-                <p>Webhook URL: {webhook_url}</p>
-                <p>token: {auth_token}</p>
-                <button onClick={() => setIsRunning(!isRunning)}>Run Trigger</button>
-                <button onClick={() => deleteTrigger(trigger_id)}>Delete Trigger</button>
+        <div className="w-full">
+            <div className={`flex flex-row w-[100%] hover:bg-gray-200 ${isRunning ? 'bg-gray-200' : ''} p-2`}>
+                <h2 className="mr-4">{trigger_name}</h2>
+                <button className="ml-auto mr-4" onClick={() => setIsRunning(!isRunning)}><FontAwesomeIcon className="text-green-500" icon={faCircleRight} style={{ display: isRunning ? "none" : "inline" }}/><FontAwesomeIcon  icon={faCircleStop} style={{ display: isRunning ? "inline" : "none" }}/></button>
+                <button onClick={() => deleteTrigger(trigger_id)}><FontAwesomeIcon className="text-red-500" icon={faTrashCan}/></button>
             </div>
-            <div style={{ display: isRunning ? "block" : "none" }}>
+            <div style={{ display: isRunning ? "block" : "none" }} className="p-2">
+                <h3 className="block font-bold mb-[2px]">Webhook URL:</h3>
+                <span className="block break-all mb-[2px]">{webhook_url}</span>
+                <h3 className="block font-bold mb-[2px]">Token:</h3>
+                <span className="block break-all mb-[2px]">{auth_token}</span>
                 <form onSubmit={handleSubmit}>
-                    <input type="checkbox" id="use_params" name="use_params" checked={useParams} onChange={() => {setUseParams(!useParams)}}/>
+                    <div>
+                        <input 
+                        className="inline w-auto mr-2"
+                        type="checkbox" 
+                        id="use_params" 
+                        name="use_params" 
+                        checked={useParams} 
+                        onChange={() => {setUseParams(!useParams)}}/>
+                        <label className="inline w-auto" htmlFor="use_params">Add Data</label>
+                    </div>
                     <fieldset disabled={!useParams} style={{ display: useParams ? "block" : "none" }}>
                         <div>
                             <label htmlFor="title">Title</label>
@@ -79,7 +92,7 @@ export default function Trigger ({trigger_id, trigger_name, webhook_url, auth_to
                             />
                         </div>
                     </fieldset>
-                    <button type="submit">Run Trigger</button>
+                    <button className="hover:text-green-500 transition-all duration-300" type="submit"><FontAwesomeIcon icon={faCircleRight} /></button>
                 </form>
             </div>
         </div>

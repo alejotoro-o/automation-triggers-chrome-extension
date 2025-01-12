@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import './App.css'
 import ConfigTrigger from './components/ConfigTrigger';
 import Trigger from './components/Trigger';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 export default function App() {
 
@@ -34,20 +36,22 @@ export default function App() {
     }
 
     return (
-        <main>
-            <section>
-                <h1>Automation Trigger</h1>
+        <main className='w-full'>
+            <section className='m-4 p-4 text-center'>
+                <img className='m-auto' src='vite.svg' alt='Automation Trigger Logo'/>
+                <h1 className='text-3xl font-bold'>Automation Trigger</h1>
             </section>
-            <section>
-                <div>
-                    <button onClick={() => setIsNewTrigger(true)}>Add Trigger</button>
+            <section className='border-t-[1px] border-b-[1px] border-gray-400'>
+                <div className='flex flex-row mt-1 mb-1 mx-4'>
+                    <button className='hover:text-gray-400 transition-all duration-300' onClick={() => setIsNewTrigger(true)} style={{ display: isNewTrigger ? "none" : "block" }}><FontAwesomeIcon icon={faPlus}/> Add Trigger</button>
+                    <button className='ml-auto hover:text-gray-400 transition-all duration-300' onClick={() => setIsNewTrigger(false)} style={{ display: isNewTrigger ? "block" : "none" }}>Cancel</button>
                 </div>
             </section>
-            <section>
+            <section className='flex m-4 overflow-y-auto'>
                 <div style={{ display: isNewTrigger ? "block" : "none" }}>
                     <ConfigTrigger setIsNewTrigger={setIsNewTrigger}/>
                 </div>
-                <div style={{ display: isNewTrigger ? "none" : "block" }}>
+                <div style={{ display: isNewTrigger ? "none" : "block" }} className='w-full border-[1px] border-gray-200 rounded-md'>
                     {triggers.map((trigger) => (
                         <div key={trigger.id}>
                             <Trigger 
