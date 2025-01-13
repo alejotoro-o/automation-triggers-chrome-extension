@@ -38,7 +38,7 @@ export default function App() {
     return (
         <main className='w-full'>
             <section className='m-4 p-4 text-center'>
-                <img className='m-auto' src='vite.svg' alt='Automation Trigger Logo'/>
+                <img className='m-auto' src='images/logo.svg' alt='Automation Trigger Logo'/>
                 <h1 className='text-3xl font-bold'>Automation Trigger</h1>
             </section>
             <section className='border-t-[1px] border-b-[1px] border-gray-400'>
