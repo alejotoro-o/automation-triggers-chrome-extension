@@ -28,9 +28,15 @@ export default function Trigger ({trigger_id, trigger_name, webhook_url, auth_to
                 formObject[key] = value as string;
             });
 
-            console.log(formObject);
+            // console.log(formObject);
 
         }
+
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => { 
+            formObject['url'] = tabs[0].url as string; 
+        });
+
+        console.log(formObject)
 
         fetch(webhook_url, {
             method: 'POST',
